@@ -1,4 +1,4 @@
-from topic_selector import TopicSelector
+from topic_selector import get_topic_name
 import sys
 
 
@@ -16,4 +16,4 @@ if __name__ == "__main__":
 
     bag_file_path = sys.argv[1]
     # topic_selector.pyのget_topic_name関数を呼び出す
-    camera_topic_name = get_camera_topic_name(bag_file_path)
+    topic_name = get_topic_name(bag_file_path)
