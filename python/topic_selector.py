@@ -1,6 +1,8 @@
-import rosbag
 import tkinter as tk
+import rosbag
 
+
+# Topicを一覧し選択するGUIを表示するclass
 class TopicSelector:
     def __init__(self, file_path):
         self.file_path = file_path
@@ -21,19 +23,22 @@ class TopicSelector:
         for topic in topics:
             self.topics_listbox.insert(tk.END, topic)
 
+
     def get_topics(self):
-        bag = rosbag.Bag(self.file_path)
-        topics = list(bag.get_type_and_topic_info()[1].keys())
-        bag.close()
+        with rosbag.Bag(self.file_path) as bag:
+            topics = list(bag.get_type_and_topic_info()[1].keys())
         return topics
+    
 
     def on_analyze_button_clicked(self):
         self.selected_topic = self.topics_listbox.get(self.topics_listbox.curselection())
         self.root.quit()
 
+
     def run(self):
         self.root.mainloop()
         return self.selected_topic
+
 
 def get_topic_name(bag_file_path):
     selector = TopicSelector(bag_file_path)

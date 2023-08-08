@@ -1,9 +1,8 @@
-from topic_selector import get_topic_name
 import sys
-import rosbag
 import csv
 from pyproj import CRS, Transformer
-
+import rosbag
+from topic_selector import get_topic_name
 
 # 緯度、経度、高度の値を受け取り、UTM座標系に変換して返す
 def convert_to_xyz(latitude, longitude, altitude):
@@ -14,8 +13,7 @@ def convert_to_xyz(latitude, longitude, altitude):
 
     # 緯度、経度からUTM座標への変換
     x, y = transformer.transform(latitude, longitude)
-    x, y, altitude # x, yは東方向と北方向の座標、altitudeは高度
-    x, y, z = latitude, longitude, altitude # この行を適切な変換に置き換える
+    z = altitude # 高度
     return x, y, z
 
 
@@ -35,7 +33,6 @@ def export_to_csv(bag_file,gps_topic):
                 
                 x, y, z = convert_to_xyz(latitude, longitude, altitude)
                 csv_writer.writerow([frame_number, x, y, z])
-                print(f"Frame {frame_number}: x={x}, y={y}, z={z}")
 
                 frame_number += 1
 
